@@ -1,0 +1,46 @@
+{
+  "name": "bitcoin_advisor",
+  "description": "AI agent for Bitcoin trading signals using RSI and news sentiment",
+  "interval": 300,
+
+  "llm": {
+    "provider": "groq",
+    "api_key": "${GROQ_API_KEY}",
+    "model": "llama-3.3-70b-versatile"
+  },
+
+  "inputs": [
+    {
+      "name": "bitcoin_price",
+      "class": "BitcoinPriceInput",
+      "config": {
+        "rsi_period": 14,
+        "sources": ["binance", "coingecko", "coincap"]
+      }
+    },
+    {
+      "name": "news_sentiment",
+      "class": "NewsSentimentInput",
+      "config": {
+        "news_limit": 50,
+        "sentiment_threshold": 0.2
+      }
+    }
+  ],
+
+  "actions": [
+    {
+      "name": "generate_signal",
+      "class": "GenerateSignalAction",
+      "config": {}
+    },
+    {
+      "name": "send_alert",
+      "class": "SendAlertAction",
+      "config": {
+        "websocket_url": "${NEXT_PUBLIC_WS_URL}",
+        "webhook_url": ""
+      }
+    }
+  ]
+}

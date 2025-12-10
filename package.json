@@ -1,0 +1,25 @@
+{
+  "name": "bitcoin-advisor-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "env -u NODE_ENV pnpm --filter web build",
+    "start": "pnpm --filter web start",
+    "lint": "pnpm --filter web lint",
+    "typecheck": "pnpm --filter web typecheck",
+    "dev:all": "concurrently \"pnpm dev\" \"pnpm dev:om1\"",
+    "dev:om1": "cd apps/om1-runtime && python src/run.py start bitcoin_advisor"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}
